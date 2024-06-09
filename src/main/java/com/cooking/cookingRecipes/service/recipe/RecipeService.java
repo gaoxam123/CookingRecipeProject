@@ -1,4 +1,4 @@
-package com.cooking.cookingRecipes.service;
+package com.cooking.cookingRecipes.service.recipe;
 
 import com.cooking.cookingRecipes.dao.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
