@@ -1,10 +1,7 @@
-package com.cooking.cookingRecipes.entity;
+package com.cooking.cookingRecipes.entity.recipe;
 
 
 import jakarta.persistence.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Entity

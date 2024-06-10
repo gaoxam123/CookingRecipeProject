@@ -1,4 +1,5 @@
 package com.cooking.cookingRecipes.service.review;
 
-public class ReviewService {
+public interface ReviewService {
+    // define service methods here
 }
