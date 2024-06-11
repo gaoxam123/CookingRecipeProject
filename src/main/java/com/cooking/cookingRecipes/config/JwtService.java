@@ -16,7 +16,7 @@ import java.util.function.Function;
 @Service
 public class JwtService {
     // secret key used for hashing to create jwt tokens
-    private static final String SECRET = "tJiA158Qv2Oe53bi0lQcwlmMzRl9GWHg";
+    private static final String SECRET = "4245c8281b0db5ef84d5cb094119d355ecc692fe3b1668cc37a0dbe73cb4b287";
 
     public String extractUsername(String token) {
         // extract the username of the token (subject)

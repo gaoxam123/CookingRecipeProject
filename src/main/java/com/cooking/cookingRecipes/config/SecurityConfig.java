@@ -26,11 +26,9 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request ->
                         // not logged-in users can look at other users' profiles and register site (add endpoints for reviews and recipes later)
-                        request.requestMatchers(new AntPathRequestMatcher("/users/list", "GET")).permitAll()
-                                .requestMatchers(new AntPathRequestMatcher("/users/save", "POST")).permitAll()
-                                .requestMatchers(new AntPathRequestMatcher("/users/register", "GET")).permitAll()
-                                .requestMatchers(new AntPathRequestMatcher("/users/*", "GET")).permitAll()
-//                                .requestMatchers(new AntPathRequestMatcher("/users/**")).authenticated())
+                        request.requestMatchers(new AntPathRequestMatcher("/auth/**", "GET")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/auth/**", "POST")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/users/list")).permitAll()
                                 .anyRequest().authenticated())
                 // since we use jwt, we don't have to store user data in any sessions
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -39,5 +37,5 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
-
+// https://medium.com/@tericcabrel/implement-jwt-authentication-in-a-spring-boot-3-application-5839e4fd8fac
 }

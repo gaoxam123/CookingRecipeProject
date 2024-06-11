@@ -5,7 +5,6 @@ import com.cooking.cookingRecipes.entity.user.Role;
 import com.cooking.cookingRecipes.entity.user.User;
 import com.cooking.cookingRecipes.service.user.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.beans.BeanUtils;
@@ -28,19 +27,17 @@ public class UserController {
         return "user/index";
     }
 
-    @GetMapping("/edit")
-    public String editUser(Model model, @ModelAttribute("user") User user) {
+    @GetMapping("/{userId}/edit")
+    public String editUser(Model model, @PathVariable Long userId) {
+        User user = userService.getUserById(userId);
+        if (user == null) {
+            throw new NoSuchElementException("User not found");
+        }
         model.addAttribute("user", user);
         return "user/edit";
     }
 
-    @PutMapping(
-            path = "/{userId}",
-            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
-            produces = {
-                    MediaType.APPLICATION_ATOM_XML_VALUE,
-                    MediaType.APPLICATION_JSON_VALUE
-            })
+    @PutMapping(path = "/{userId}")
     public String updateUser(@PathVariable Long userId, User user) {
         User targetUser = userService.getUserById(userId);
         Role currentRole = targetUser.getRole();
@@ -63,6 +60,6 @@ public class UserController {
             throw new NoSuchElementException("Cannot find user with id " + userId);
         }
         userService.deleteUser(userId);
-        return "redirect:/users";
+        return "redirect:/users/list";
     }
 }

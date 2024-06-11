@@ -9,7 +9,6 @@ public interface UserService {
     User getUserById(Long id);
     void deleteUser(Long id);
     void updateUser(User user);
-    void register(User user);
-//    void login(User user);
-//    void logout();
+    User findUserByEmail(String email);
+    void saveUser(User user);
 }

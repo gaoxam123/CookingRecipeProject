@@ -1,7 +1,6 @@
 package com.cooking.cookingRecipes.service.user;
 
 import com.cooking.cookingRecipes.dao.UserRepository;
-import com.cooking.cookingRecipes.entity.user.Role;
 import com.cooking.cookingRecipes.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -53,10 +52,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void register(User user) {
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
-        user.setRole(Role.USER);
+    public User findUserByEmail(String email) {
+        var user = userRepository.findByEmail(email);
+        if (user.isEmpty()) {
+            throw new RuntimeException("Can't find user with email: " + email);
+        }
+        return user.get();
+    }
+
+    @Override
+    public void saveUser(User user) {
         userRepository.save(user);
     }
+
 }
