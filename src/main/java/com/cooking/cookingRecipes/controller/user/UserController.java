@@ -1,6 +1,7 @@
 package com.cooking.cookingRecipes.controller.user;
 
 
+import com.cooking.cookingRecipes.entity.user.Role;
 import com.cooking.cookingRecipes.entity.user.User;
 import com.cooking.cookingRecipes.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping("/users")
+@CrossOrigin("/users")
 public class UserController {
     private final UserService userService;
 
@@ -51,7 +53,9 @@ public class UserController {
     @PutMapping("/{userId}")
     public String updateUser(@PathVariable UUID userId, @RequestBody User user) {
         User targetUser = userService.getUserById(userId);
+        Role currentRole = targetUser.getRole();
         BeanUtils.copyProperties(user, targetUser, "id");
+        targetUser.setRole(currentRole);
         userService.updateUser(targetUser);
         return "redirect:/users/" + userId;
     }

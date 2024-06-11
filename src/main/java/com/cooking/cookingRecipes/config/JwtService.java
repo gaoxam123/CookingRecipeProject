@@ -19,6 +19,7 @@ public class JwtService {
     private static final String SECRET = "tJiA158Qv2Oe53bi0lQcwlmMzRl9GWHg";
 
     public String extractUsername(String token) {
+        // extract the username of the token (subject)
         return extractClaim(token, Claims::getSubject);
     }
 
@@ -35,15 +36,21 @@ public class JwtService {
         return Jwts
                 .builder()
                 .claims()
+                // add custom claims such as roles
                 .add(extraClaims)
+                // set subject for the token (can be used as identification)
                 .subject(userDetails.getUsername())
+                // created at what time
                 .issuedAt(new Date(System.currentTimeMillis()))
+                // expire in 1 day
                 .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
                 .and()
+                // define hashing strategy
                 .signWith(getSignInKey(), Jwts.SIG.HS256)
                 .compact();
     }
 
+    // if the token is valid then the user is authenticated (but not yet authorized)
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
@@ -57,15 +64,21 @@ public class JwtService {
         return extractClaim(token, Claims::getExpiration);
     }
 
+    // extract claims from the token
     public Claims extractAllClaims(String token) {
         return Jwts
+                // parse into 3 parts
                 .parser()
+                // verify whether the token has been changed
                 .verifyWith(getSignInKey())
                 .build()
+                // extract the claims
                 .parseSignedClaims(token)
+                // get payload, needed for authentication and authorization
                 .getPayload();
     }
 
+    // create key from SECRET
     private SecretKey getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET);
         return Keys.hmacShaKeyFor(keyBytes);
