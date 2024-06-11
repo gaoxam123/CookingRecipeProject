@@ -18,6 +18,7 @@ import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
+// this annotation creates a constructor using every final fields defined below -> no need for injection
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;

@@ -30,7 +30,8 @@ public class SecurityConfig {
                                 .requestMatchers(new AntPathRequestMatcher("/users/save", "POST")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/users/register", "GET")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/users/*", "GET")).permitAll()
-                                .requestMatchers(new AntPathRequestMatcher("/users/**")).authenticated())
+//                                .requestMatchers(new AntPathRequestMatcher("/users/**")).authenticated())
+                                .anyRequest().authenticated())
                 // since we use jwt, we don't have to store user data in any sessions
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)

@@ -4,7 +4,7 @@ package com.cooking.cookingRecipes.controller.user;
 import com.cooking.cookingRecipes.entity.user.Role;
 import com.cooking.cookingRecipes.entity.user.User;
 import com.cooking.cookingRecipes.service.user.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,37 +17,15 @@ import java.util.NoSuchElementException;
 @Controller
 @RequestMapping("/users")
 @CrossOrigin("/users")
+@RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     @GetMapping("/list")
     public String index(Model model) {
         List<User> users = userService.getUsers();
         model.addAttribute("users", users);
         return "user/index";
-    }
-
-    @GetMapping("/register")
-    public String showRegisterForm(Model model) {
-        model.addAttribute("user", new User());
-        return "user/register";
-    }
-
-    @PostMapping(
-            path = "/save",
-            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
-            produces = {
-                    MediaType.APPLICATION_ATOM_XML_VALUE,
-                    MediaType.APPLICATION_JSON_VALUE
-            })
-    public String registerUser(User user) {
-        userService.register(user);
-        return "redirect:/users/" + user.getId();
     }
 
     @GetMapping("/edit")
