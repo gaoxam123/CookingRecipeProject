@@ -26,8 +26,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request ->
                         // not logged-in users can look at other users' profiles and register site (add endpoints for reviews and recipes later)
-                        request.requestMatchers(new AntPathRequestMatcher("/users", "GET")).permitAll()
-                                .requestMatchers(new AntPathRequestMatcher("/users", "POST")).permitAll()
+                        request.requestMatchers(new AntPathRequestMatcher("/users/list", "GET")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/users/save", "POST")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/users/register", "GET")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/users/*", "GET")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/users/**")).authenticated())

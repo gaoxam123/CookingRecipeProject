@@ -5,6 +5,7 @@ import com.cooking.cookingRecipes.entity.user.Role;
 import com.cooking.cookingRecipes.entity.user.User;
 import com.cooking.cookingRecipes.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.beans.BeanUtils;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/users")
@@ -25,7 +25,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/list")
     public String index(Model model) {
         List<User> users = userService.getUsers();
         model.addAttribute("users", users);
@@ -33,13 +33,19 @@ public class UserController {
     }
 
     @GetMapping("/register")
-    public String newUser(Model model) {
+    public String showRegisterForm(Model model) {
         model.addAttribute("user", new User());
         return "user/register";
     }
 
-    @PostMapping("/")
-    public String registerUser(@RequestBody User user) {
+    @PostMapping(
+            path = "/save",
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
+            produces = {
+                    MediaType.APPLICATION_ATOM_XML_VALUE,
+                    MediaType.APPLICATION_JSON_VALUE
+            })
+    public String registerUser(User user) {
         userService.register(user);
         return "redirect:/users/" + user.getId();
     }
@@ -50,8 +56,14 @@ public class UserController {
         return "user/edit";
     }
 
-    @PutMapping("/{userId}")
-    public String updateUser(@PathVariable UUID userId, @RequestBody User user) {
+    @PutMapping(
+            path = "/{userId}",
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
+            produces = {
+                    MediaType.APPLICATION_ATOM_XML_VALUE,
+                    MediaType.APPLICATION_JSON_VALUE
+            })
+    public String updateUser(@PathVariable Long userId, User user) {
         User targetUser = userService.getUserById(userId);
         Role currentRole = targetUser.getRole();
         BeanUtils.copyProperties(user, targetUser, "id");
@@ -61,14 +73,14 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public String show(@PathVariable UUID userId, Model model) {
+    public String show(@PathVariable Long userId, Model model) {
         User user = userService.getUserById(userId);
         model.addAttribute("user", user);
         return "user/show";
     }
 
     @DeleteMapping("/{userId}")
-    public String delete(@PathVariable UUID userId) {
+    public String delete(@PathVariable Long userId) {
         if (userService.getUserById(userId) == null) {
             throw new NoSuchElementException("Cannot find user with id " + userId);
         }
