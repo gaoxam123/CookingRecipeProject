@@ -28,6 +28,7 @@ public class SecurityConfig {
                         // not logged-in users can look at other users' profiles and register site (add endpoints for reviews and recipes later)
                         request.requestMatchers(new AntPathRequestMatcher("/auth/**", "GET")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/auth/**", "POST")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/error")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/users/list")).permitAll()
                                 .anyRequest().authenticated())
                 // since we use jwt, we don't have to store user data in any sessions

@@ -7,10 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/auth")
@@ -32,12 +29,12 @@ public class AuthController {
     }
 
     @PostMapping(path = "/save")
-    public ResponseEntity<AuthenticationResponse> registerUser(@RequestBody RegisterRequest request) {
+    public ResponseEntity<AuthenticationResponse> registerUser(@ModelAttribute RegisterRequest request) {
         return ResponseEntity.ok(authService.register(request));
     }
 
     @PostMapping(path = "/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticateUser(@RequestBody AuthenticationRequest request) {
+    public ResponseEntity<AuthenticationResponse> authenticateUser(@ModelAttribute AuthenticationRequest request) {
         return ResponseEntity.ok(authService.authenticate(request));
     }
 

@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @PutMapping(path = "/{userId}")
-    public String updateUser(@PathVariable Long userId, User user) {
+    public String updateUser(@PathVariable Long userId, @ModelAttribute User user) {
         User targetUser = userService.getUserById(userId);
         Role currentRole = targetUser.getRole();
         BeanUtils.copyProperties(user, targetUser, "id");
