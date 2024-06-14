@@ -37,6 +37,8 @@ public class AuthConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        // the AuthenticationConfiguration retrieves an AuthenticationManagerBuilder from the ApplicationContext,
+        // then scans for config beans (defined in this file) and use them to generate an AuthenticationManager
         return config.getAuthenticationManager();
     }
 
