@@ -1,7 +1,6 @@
 package com.cooking.cookingRecipes.service.auth;
 
 import com.cooking.cookingRecipes.config.JwtService;
-import com.cooking.cookingRecipes.controller.auth.AuthService;
 import com.cooking.cookingRecipes.entity.auth.AuthenticationRequest;
 import com.cooking.cookingRecipes.entity.auth.AuthenticationResponse;
 import com.cooking.cookingRecipes.entity.auth.RegisterRequest;

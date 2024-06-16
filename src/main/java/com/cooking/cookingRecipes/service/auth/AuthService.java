@@ -1,4 +1,4 @@
-package com.cooking.cookingRecipes.controller.auth;
+package com.cooking.cookingRecipes.service.auth;
 
 import com.cooking.cookingRecipes.entity.auth.AuthenticationRequest;
 import com.cooking.cookingRecipes.entity.auth.AuthenticationResponse;

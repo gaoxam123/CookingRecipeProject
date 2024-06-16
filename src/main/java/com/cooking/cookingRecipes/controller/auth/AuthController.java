@@ -3,6 +3,7 @@ package com.cooking.cookingRecipes.controller.auth;
 import com.cooking.cookingRecipes.entity.auth.AuthenticationRequest;
 import com.cooking.cookingRecipes.entity.auth.AuthenticationResponse;
 import com.cooking.cookingRecipes.entity.auth.RegisterRequest;
+import com.cooking.cookingRecipes.service.auth.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
