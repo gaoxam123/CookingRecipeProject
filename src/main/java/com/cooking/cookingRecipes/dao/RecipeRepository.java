@@ -1,8 +1,9 @@
 package com.cooking.cookingRecipes.dao;
 
 import com.cooking.cookingRecipes.entity.recipe.Recipe;
-import org.springframework.data.repository.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-@org.springframework.stereotype.Repository
-public interface RecipeRepository extends Repository<Recipe, Long> {
+@Repository
+public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 }
